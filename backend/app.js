@@ -13,10 +13,10 @@ app.use(cors()); // Активира CORS
 app.use(express.json()); // Парсва JSON в заявките
 
 // Рутери
-app.use('/api/auth', require('./routes/auth.js')); // Рутер за автентикация
-app.use('/api/uploads', require('./routes/uploads.js')); // Рутер за качване на файлове
-app.use('/api/feed', require('./routes/feed.js')); // Рутер за новинарския поток
-app.use('/api/map', require('./routes/map.js')); // Рутер за картографска функционалност
+app.use('/api/auth', require('./routes/auth')); // Рутер за автентикация
+app.use('/api/uploads', require('./routes/uploads')); // Рутер за качване на файлове
+app.use('/api/feed', require('./routes/feed')); // Рутер за новинарския поток
+app.use('/api/map', require('./routes/map')); // Рутер за картографска функционалност
 
 // Конфигуриране на порта
 const PORT = process.env.PORT || 5000;

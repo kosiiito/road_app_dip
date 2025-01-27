@@ -1,29 +1,40 @@
 const express = require('express');
+const authenticateToken = require('../middleware/authenticateToken'); // Middleware за защита на маршрутите
+const Upload = require('../models/Upload'); // Модел за снимки/видеа
+
 const router = express.Router();
 
-// Примерен маршрут за получаване на новини
-router.get('/', (req, res) => {
-  res.json({
-    message: 'Feed route working!',
-    posts: [
-      { id: 1, content: 'Post 1', author: 'User A' },
-      { id: 2, content: 'Post 2', author: 'User B' },
-    ],
-  });
+// GET: Извличане на всички постове
+router.get('/', async (req, res) => {
+  try {
+    const posts = await Upload.find()
+      .sort({ uploadedAt: -1 })
+      .populate('userId', 'email'); // Включи имейла на автора
+    res.status(200).json({ posts });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch posts' });
+  }
 });
 
-// Примерен маршрут за добавяне на публикация
-router.post('/', (req, res) => {
-  const { content, author } = req.body;
-  if (!content || !author) {
-    return res.status(400).json({ error: 'Content and author are required' });
+// POST: Качване на нов пост (примерно съдържание или файл)
+router.post('/', authenticateToken, async (req, res) => {
+  const { filePath, fileType } = req.body;
+
+  if (!filePath || !fileType) {
+    return res.status(400).json({ error: 'File path and file type are required' });
   }
 
-  // Логика за запис в базата данни
-  res.status(201).json({
-    message: 'Post created successfully',
-    post: { id: Date.now(), content, author },
-  });
+  try {
+    const newPost = new Upload({
+      userId: req.user.id, // ID на потребителя от токена
+      filePath,
+      fileType,
+    });
+    await newPost.save(); // Запиши поста в базата
+    res.status(201).json({ message: 'Post created successfully', post: newPost });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create post' });
+  }
 });
 
 module.exports = router;
