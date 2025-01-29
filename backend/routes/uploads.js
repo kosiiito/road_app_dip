@@ -1,29 +1,25 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');  // За да можем да четем файловете
+const fs = require('fs');  
 const router = express.Router();
-const authenticateToken = require('../middleware/authenticateToken');  // Проверка на JWT токена
-const Post = require('../models/Post');  // Модел за постове
+const authenticateToken = require('../middleware/authenticateToken'); 
+const Post = require('../models/Post');  
 
-// Настройване на multer за качване на файлове
-const storage = multer.memoryStorage(); // Използваме memoryStorage вместо diskStorage
+const storage = multer.memoryStorage(); 
 const upload = multer({ storage: storage });
 
-// Рутер за ъплоуд на снимка
 router.post('/', authenticateToken, upload.single('file'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded' });
   }
 
-  // Преобразуваме файла в Buffer
   const imageBuffer = req.file.buffer; 
 
-  // Записване на файла в базата данни
   const newPost = new Post({
-    image: imageBuffer, // Записваме самия файл като Binary Data
-    description: req.body.description, // Описание, ако има такова
-    user: req.user.id // Потребителят, който качва (взимаме от JWT токена)
+    image: imageBuffer, 
+    description: req.body.description,
+    user: req.user.id 
   });
 
   newPost.save()
