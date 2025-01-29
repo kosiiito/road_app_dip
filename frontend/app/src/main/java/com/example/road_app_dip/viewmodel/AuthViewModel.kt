@@ -19,7 +19,6 @@ class AuthViewModel : ViewModel() {
             try {
                 val user = Users(email = email, password = password)
 
-                // Логваме заявката преди изпращане
                 Log.d("LOGIN_REQUEST", "Email: $email, Password: $password")
 
                 val response = api.loginUser(user)
@@ -28,7 +27,6 @@ class AuthViewModel : ViewModel() {
                     val responseBody = response.body()
                     Log.d("LOGIN_SUCCESS", "Response: $responseBody")
 
-                    // Проверка дали отговорът съдържа token
                     val token = responseBody?.get("token")
                     if (token != null) {
                         onResult(true, "Login successful! Token: $token")
@@ -39,11 +37,9 @@ class AuthViewModel : ViewModel() {
                     val errorBody = response.errorBody()?.string() ?: "Unknown error"
                     Log.e("LOGIN_ERROR", "Code: ${response.code()}, Message: $errorBody")
 
-                    // Ако сървърът връща HTML грешка, това значи, че URL или API логиката са грешни
                     if (errorBody.startsWith("<!DOCTYPE html>")) {
                         onResult(false, "Server returned an HTML page. Check API URL.")
                     } else {
-                        // Опитваме се да разберем JSON грешката
                         val errorJson = try {
                             JSONObject(errorBody).getString("message")
                         } catch (e: Exception) {
