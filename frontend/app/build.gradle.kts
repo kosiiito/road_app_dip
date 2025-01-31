@@ -55,6 +55,8 @@ dependencies {
 
 
     implementation(libs.glide)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
     kapt(libs.compiler)
 
     implementation(libs.androidx.core.ktx)

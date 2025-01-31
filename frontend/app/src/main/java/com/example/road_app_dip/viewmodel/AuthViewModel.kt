@@ -7,9 +7,6 @@ import com.example.road_app_dip.models.Users
 import com.example.road_app_dip.network.ApiService
 import com.example.road_app_dip.network.ApiInterface
 import kotlinx.coroutines.launch
-import okhttp3.MediaType
-import okhttp3.RequestBody
-import org.json.JSONObject
 
 class AuthViewModel : ViewModel() {
     private val api = ApiService.create<ApiInterface>()
@@ -18,39 +15,40 @@ class AuthViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val user = Users(email = email, password = password)
-
-                Log.d("LOGIN_REQUEST", "Email: $email, Password: $password")
-
                 val response = api.loginUser(user)
 
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    Log.d("LOGIN_SUCCESS", "Response: $responseBody")
-
-                    val token = responseBody?.get("token")
-                    if (token != null) {
-                        onResult(true, "Login successful! Token: $token")
-                    } else {
-                        onResult(false, "Login failed: No token received")
-                    }
+                if (response.isSuccessful && response.body() != null) {
+                    Log.d("LOGIN_SUCCESS", "Response: ${response.body()}")
+                    onResult(true, null)
                 } else {
-                    val errorBody = response.errorBody()?.string() ?: "Unknown error"
-                    Log.e("LOGIN_ERROR", "Code: ${response.code()}, Message: $errorBody")
-
-                    if (errorBody.startsWith("<!DOCTYPE html>")) {
-                        onResult(false, "Server returned an HTML page. Check API URL.")
-                    } else {
-                        val errorJson = try {
-                            JSONObject(errorBody).getString("message")
-                        } catch (e: Exception) {
-                            errorBody
-                        }
-                        onResult(false, errorJson)
-                    }
+                    val errorMessage = response.errorBody()?.string() ?: "Invalid email or password"
+                    Log.e("LOGIN_ERROR", "Code: ${response.code()}, Message: $errorMessage")
+                    onResult(false, errorMessage)
                 }
             } catch (e: Exception) {
                 Log.e("LOGIN_EXCEPTION", "Exception: ${e.message}")
-                onResult(false, "Exception: ${e.message}")
+                onResult(false, e.message)
+            }
+        }
+    }
+
+    fun registerUser(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val user = Users(email = email, password = password)
+                val response = api.registerUser(user)
+
+                if (response.isSuccessful && response.body() != null) {
+                    Log.d("REGISTER_SUCCESS", "User registered: ${response.body()}")
+                    onResult(true, null)
+                } else {
+                    val errorMessage = response.errorBody()?.string() ?: "Registration failed"
+                    Log.e("REGISTER_ERROR", "Code: ${response.code()}, Message: $errorMessage")
+                    onResult(false, errorMessage)
+                }
+            } catch (e: Exception) {
+                Log.e("REGISTER_EXCEPTION", "Exception: ${e.message}")
+                onResult(false, e.message)
             }
         }
     }
