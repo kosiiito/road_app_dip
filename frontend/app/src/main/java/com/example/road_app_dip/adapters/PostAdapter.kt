@@ -1,5 +1,7 @@
 package com.example.road_app_dip.adapters
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,9 +26,32 @@ class PostAdapter(private val posts: List<Post>) : RecyclerView.Adapter<PostAdap
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = posts[position]
-        holder.postCaption.text = post.caption
-        Glide.with(holder.itemView.context).load(post.imageUrl).into(holder.postImage)
+        holder.postCaption.text = post.description
+
+        val decodedBitmap = convertBufferToBitmap(post.image?.data)
+
+        if (decodedBitmap != null) {
+            Glide.with(holder.itemView.context)
+                .asBitmap()
+                .load(decodedBitmap)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(holder.postImage)
+        } else {
+            holder.postImage.setImageResource(R.drawable.ic_launcher_foreground)
+        }
     }
 
     override fun getItemCount(): Int = posts.size
+
+    private fun convertBufferToBitmap(buffer: List<Int>?): Bitmap? {
+        if (buffer.isNullOrEmpty()) return null
+        return try {
+            val byteArray = buffer.map { it.toByte() }.toByteArray()
+            BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 }

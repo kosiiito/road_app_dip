@@ -42,7 +42,6 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-    implementation(libs.glide)
     implementation(libs.play.services.maps)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
@@ -53,11 +52,21 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.retrofit)
 
+    implementation (libs.play.services.maps.v1820)
+    implementation (libs.androidx.fragment.ktx)
 
-    implementation(libs.glide)
+
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     kapt(libs.compiler)
+
+    implementation(libs.play.services.maps.v1701)
+    implementation(libs.play.services.location)
+
+        implementation(libs.glide.v4160)
+        annotationProcessor(libs.compiler.v4120)
+
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

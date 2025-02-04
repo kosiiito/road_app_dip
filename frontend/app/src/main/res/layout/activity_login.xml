@@ -3,13 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="40dp">
+    android:padding="40dp"
+    android:gravity="center"
+    android:weightSum="1">
 
-    <Button
-        android:id="@+id/loginButton"
+    <EditText
+        android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login" />
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/passwordEditText"
@@ -18,12 +21,11 @@
         android:hint="Password"
         android:inputType="textPassword" />
 
-    <EditText
-        android:id="@+id/emailEditText"
+    <Button
+        android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:text="Login" />
 
     <Button
     android:id="@+id/registerButton"

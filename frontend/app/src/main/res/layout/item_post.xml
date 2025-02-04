@@ -14,15 +14,15 @@
             android:id="@+id/postImage"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/postCaption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp"
-            android:textColor="#000"
-            android:textSize="16sp" />
+            android:padding="8dp"
+            android:textSize="16sp"/>
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

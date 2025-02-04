@@ -1,5 +1,6 @@
 package com.example.road_app_dip.network
 
+import com.example.road_app_dip.models.Feed
 import com.example.road_app_dip.models.Users
 import com.example.road_app_dip.models.Post
 import com.example.road_app_dip.models.Location
@@ -23,7 +24,7 @@ interface ApiInterface {
     ): Response<Post>
 
     @GET("feed")
-    suspend fun getFeed(): Response<List<Post>>
+    suspend fun getFeed(): Response<Feed>
 
     @POST("map/add")
     suspend fun addLocation(@Body location: Location): Response<Location>

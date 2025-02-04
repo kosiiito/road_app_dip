@@ -12,13 +12,31 @@
       android:id="@+id/fragmentContainer"
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:layout_weight="1" />
+      android:layout_weight="1"
+      tools:ignore="MissingConstraints" />
 
-  <com.google.android.material.bottomnavigation.BottomNavigationView
-      android:id="@+id/bottomNavigation"
+
+  <FrameLayout
+      android:id="@+id/map_container"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" >
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:menu="@menu/bottom_nav_menu"
+        tools:ignore="MissingConstraints" />
+  </FrameLayout>
+  <ImageView
+      android:id="@+id/imageView"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-/>//      app:menu="@menu/bottom_nav_menu" />
+      android:scaleType="centerCrop"
+      tools:ignore="MissingConstraints" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

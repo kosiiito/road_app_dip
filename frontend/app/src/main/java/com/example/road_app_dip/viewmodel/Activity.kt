@@ -1,5 +1,6 @@
 package com.example.road_app_dip
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -7,10 +8,21 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.road_app_dip.viewmodel.AuthViewModel
 
 class LoginActivity : AppCompatActivity() {
     private val authViewModel: AuthViewModel by viewModels()
+
+
+    /*private fun saveAccessToken(token: String) {
+        val sharedPref = requireContext().getSharedPreferences("app_prefs", Activity.MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putString("ACCESS_TOKEN", token)
+            apply()
+        }
+    }*/
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

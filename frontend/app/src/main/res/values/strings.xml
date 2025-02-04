@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Road_app_dip</string>
+    <string name="google_maps_key">AIzaSyANls0vb6wBpe10uISrXmYKEMkmSeru8rw</string>
+
 </resources>
