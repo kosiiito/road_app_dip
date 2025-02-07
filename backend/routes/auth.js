@@ -5,12 +5,18 @@ const User = require('../models/Users');
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
+  console.log("📩 Register request body:", req.body); // ✅ Лог на входящите данни
+
   const { email, password } = req.body;
-  
+
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required" });
+  }
+
   try {
     const user = await User.findOne({ email });
     if (user) {
-      return res.status(400).json({ error: 'User already exists' });
+      return res.status(400).json({ error: "User already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -18,11 +24,17 @@ router.post('/register', async (req, res) => {
 
     await newUser.save();
 
-    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    if (!process.env.JWT_SECRET) {
+      throw new Error("JWT_SECRET is not set in environment variables!");
+    }
 
-    res.json({ message: 'User registered successfully', token });
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+    console.log("✅ User registered successfully:", newUser); // Лог на успешна регистрация
+    res.json({ message: "User registered successfully", token });
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    console.error("🔥 Register error:", error);
+    res.status(500).json({ error: "Server error", details: error.message });
   }
 });
 
