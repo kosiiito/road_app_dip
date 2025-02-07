@@ -25,6 +25,7 @@ lifecycle.livedata = "2.6.1"
 navigation.fragment = "2.6.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
+playServicesAwareness = "19.1.0"
 navigation.ui = "2.6.0"
 
 
@@ -54,6 +55,7 @@ play-services-maps-v1820 = { module = "com.google.android.gms:play-services-maps
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+play-services-awareness = { group = "com.google.android.gms", name = "play-services-awareness", version.ref = "playServicesAwareness" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

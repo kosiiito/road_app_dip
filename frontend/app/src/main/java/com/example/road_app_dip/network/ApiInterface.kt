@@ -4,6 +4,7 @@ import com.example.road_app_dip.models.Feed
 import com.example.road_app_dip.models.Users
 import com.example.road_app_dip.models.Post
 import com.example.road_app_dip.models.Location
+import com.example.road_app_dip.models.LocationResponse
 import retrofit2.Response
 import retrofit2.http.*
 import okhttp3.MultipartBody
@@ -26,9 +27,9 @@ interface ApiInterface {
     @GET("feed")
     suspend fun getFeed(): Response<Feed>
 
-    @POST("map/add")
+    @POST("map/add-location")
     suspend fun addLocation(@Body location: Location): Response<Location>
 
-    @GET("map")
-    suspend fun getLocations(): Response<List<Location>>
+    @GET("map/locations")
+    suspend fun getLocations(): Response<LocationResponse>
 }

@@ -129,7 +129,7 @@ class UploadFragment : Fragment() {
                 val request = Request.Builder()
                     .url("http://10.0.2.2:5000/api/uploads")
                     .post(requestBodyMulti)
-                    .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OTY3OTIzZGZkYjgzNWMzNmI3Zjk4OSIsImlhdCI6MTczODU3NDA4MywiZXhwIjoxNzM4NTc3NjgzfQ.sWjHhohJpE8nYX_jvBAbQgipRgJMiMas3GilaEr5K-I")
+                    .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3OTY3OTIzZGZkYjgzNWMzNmI3Zjk4OSIsImlhdCI6MTczODg3NzIyMSwiZXhwIjoxNzM4ODgwODIxfQ.lYUY8buxx9LKB18PbRbE1J5zScwK3zTTYfczNpGZBTk")
                     .build()
 
                 val response = client.newCall(request).execute()

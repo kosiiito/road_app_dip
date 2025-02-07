@@ -1,9 +1,10 @@
 package com.example.road_app_dip.models
 
 data class Location(
-    val id: String,
-    val name: String,
+    val userId: String,
     val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
+    val description: String
 )
+
 

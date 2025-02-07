@@ -58,6 +58,7 @@ dependencies {
 
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.play.services.awareness)
     kapt(libs.compiler)
 
     implementation(libs.play.services.maps.v1701)
