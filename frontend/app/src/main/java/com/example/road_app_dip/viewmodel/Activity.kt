@@ -1,6 +1,5 @@
 package com.example.road_app_dip
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -8,20 +7,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.road_app_dip.viewmodel.AuthViewModel
 
 class LoginActivity : AppCompatActivity() {
     private val authViewModel: AuthViewModel by viewModels()
-
-
-    /*private fun saveAccessToken(token: String) {
-        val sharedPref = requireContext().getSharedPreferences("app_prefs", Activity.MODE_PRIVATE)
-        with(sharedPref.edit()) {
-            putString("ACCESS_TOKEN", token)
-            apply()
-        }
-    }*/
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
 
-            authViewModel.loginUser(email, password) { success, message ->
+            authViewModel.loginUser(email, password, this) { success, message ->
                 if (success) {
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
 
@@ -48,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "Login Failed: $message", Toast.LENGTH_LONG).show()
                 }
             }
+
         }
 
         registerButton.setOnClickListener {

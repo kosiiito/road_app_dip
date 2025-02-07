@@ -1,23 +1,30 @@
 package com.example.road_app_dip.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.road_app_dip.models.Users
 import com.example.road_app_dip.network.ApiService
 import com.example.road_app_dip.network.ApiInterface
+import com.example.road_app_dip.utils.TokenManager
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
     private val api = ApiService.create<ApiInterface>()
 
-    fun loginUser(email: String, password: String, onResult: (Boolean, String?) -> Unit) {
+    fun loginUser(email: String, password: String, context: Context, onResult: (Boolean, String?) -> Unit) {
         viewModelScope.launch {
             try {
                 val user = Users(email = email, password = password)
                 val response = api.loginUser(user)
 
                 if (response.isSuccessful && response.body() != null) {
+                    val token = response.body()?.token
+                    if (token != null) {
+                        TokenManager.saveToken(context, token)
+                    }
+
                     Log.d("LOGIN_SUCCESS", "Response: ${response.body()}")
                     onResult(true, null)
                 } else {
